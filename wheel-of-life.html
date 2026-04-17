@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人生の8領域 診断 | Shalom Investment Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2035;
+    --navy2: #1a3a5c;
+    --gold: #b8922a;
+    --gold-light: #d4a843;
+    --ivory: #f5ead0;
+    --bg: #08141f;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--ivory);
+    font-family: 'Noto Sans JP', sans-serif;
+    min-height: 100vh;
+  }
+  a.back-link {
+    display:inline-block;
+    padding:10px 20px;
+    color:var(--gold-light);
+    font-size:13px;
+    text-decoration:none;
+    border-bottom:1px solid rgba(184,146,42,0.3);
+    letter-spacing:1px;
+  }
+  a.back-link:hover { color:var(--ivory); }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  .header {
+    text-align: center;
+    padding: 48px 20px 36px;
+    animation: fadeDown .7s ease both;
+  }
+  .sia-badge {
+    font-family: 'EB Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: .8;
+  }
+  h1 {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 600;
+    color: var(--ivory);
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  h1 span {
+    display: block;
+    font-size: clamp(14px, 2.5vw, 18px);
+    color: var(--gold-light);
+    font-style: italic;
+    font-weight: 400;
+    margin-top: 4px;
+  }
+  .gold-line {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 18px auto;
+  }
+  .header p {
+    font-size: 13px;
+    color: rgba(245,234,208,0.6);
+    line-height: 1.8;
+  }
+  .hint {
+    font-size:11px;
+    color:rgba(212,168,67,0.7);
+    margin-top:8px;
+    font-style:italic;
+    font-family:'EB Garamond',serif;
+  }
+
+  /* Wheel */
+  .wheel-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto 30px;
+    padding: 10px;
+    animation: fadeIn .9s ease both;
+  }
+  #wheelCanvas {
+    max-width: 100%;
+    height: auto;
+    cursor: crosshair;
+    border-radius: 50%;
+  }
+
+  /* Domain Cards */
+  .domains-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 36px;
+    animation: fadeUp .8s ease both;
+  }
+  .domain-card {
+    background: linear-gradient(135deg, rgba(26,58,92,0.5), rgba(13,32,53,0.7));
+    border: 1px solid rgba(184,146,42,0.2);
+    border-radius: 10px;
+    padding: 16px;
+    animation: fadeUp .6s ease both;
+  }
+  .domain-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .domain-number {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 12px;
+    display: flex; align-items:center; justify-content:center;
+    flex-shrink: 0;
+  }
+  .domain-info h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ivory);
+    line-height: 1.3;
+  }
+  .domain-info h3 .emoji { margin-right:4px; }
+  .domain-en {
+    font-size: 10px;
+    color: rgba(212,168,67,0.7);
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    margin-top: 2px;
+  }
+  .slider-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  input[type=range] {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(184,146,42,0.2);
+    outline: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .score-badge {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold-light);
+    font-family: 'EB Garamond', serif;
+    min-width: 28px;
+    text-align: right;
+  }
+
+  /* Result */
+  .result-section {
+    background: linear-gradient(135deg, rgba(26,58,92,0.6), rgba(13,32,53,0.8));
+    border: 1px solid rgba(184,146,42,0.25);
+    border-radius: 14px;
+    padding: 32px 24px;
+    text-align: center;
+    margin-bottom: 30px;
+    animation: fadeUp .9s ease both;
+  }
+  .result-label {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: rgba(212,168,67,0.7);
+    font-family: 'EB Garamond', serif;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .total-score {
+    font-family: 'EB Garamond', serif;
+    font-size: 64px;
+    font-weight: 600;
+    color: var(--gold-light);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .total-score span { font-size: 28px; color: rgba(212,168,67,0.5); }
+  .result-msg {
+    font-size: 14px;
+    color: rgba(245,234,208,0.7);
+    margin-top: 14px;
+    line-height: 1.7;
+  }
+  .focus-box {
+    display: none;
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: rgba(184,146,42,0.1);
+    border: 1px solid rgba(184,146,42,0.3);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--gold-light);
+    line-height: 1.6;
+  }
+
+  /* CTA */
+  .cta {
+    text-align: center;
+    margin-top: 10px;
+    clear: both;
+  }
+  .btn {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--navy);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 13px 40px;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all .3s ease;
+    margin: 5px;
+    border-radius: 3px;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(184,146,42,0.4); }
+  .btn.ghost {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold-light);
+  }
+  .cta-note {
+    font-size: 11px;
+    color: rgba(255,255,255,0.28);
+    margin-top: 14px;
+    font-style: italic;
+    font-family: 'EB Garamond', serif;
+    line-height: 1.8;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 48px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(184,146,42,0.12);
+  }
+  .footer p {
+    font-size: 11px;
+    color: rgba(255,255,255,0.18);
+    letter-spacing: 1px;
+    font-family: 'EB Garamond', serif;
+  }
+
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeUp   { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn   { from{opacity:0} to{opacity:1} }
+
+  .domain-card:nth-child(1){animation-delay:.05s}
+  .domain-card:nth-child(2){animation-delay:.10s}
+  .domain-card:nth-child(3){animation-delay:.15s}
+  .domain-card:nth-child(4){animation-delay:.20s}
+  .domain-card:nth-child(5){animation-delay:.25s}
+  .domain-card:nth-child(6){animation-delay:.30s}
+  .domain-card:nth-child(7){animation-delay:.35s}
+  .domain-card:nth-child(8){animation-delay:.40s}
+
+  @media(max-width:600px){
+    .domains-grid { grid-template-columns:1fr; }
+    .total-score { font-size:44px; }
+  }
+</style>
+</head>
+<body>
+
+<a class="back-link" href="https://shalom-investment-academy.web.app/index.html">← トップページへ戻る</a>
+
+<div class="container">
+
+  <div class="header">
+    <div class="sia-badge">Shalom Investment Academy</div>
+    <h1>人生の8領域 診断
+      <span>The Wheel of Life — 8 Domains</span>
+    </h1>
+    <div class="gold-line"></div>
+    <p>各領域を1〜10点で採点してください。あなたの人生のバランスが一目で見えてきます。<br>
+    <em style="font-size:11px;color:rgba(255,255,255,0.3)">Score each domain 1–10. See your life balance at a glance.</em></p>
+    <p class="hint">✦ チャートをクリック・ドラッグしてスコアを変更できます / Click or drag the chart to adjust scores</p>
+  </div>
+
+  <div class="wheel-wrap">
+    <canvas id="wheelCanvas" width="1200" height="1200"></canvas>
+  </div>
+
+  <div class="domains-grid" id="domainsGrid"></div>
+
+  <div class="result-section">
+    <div class="result-label">診断結果 / Your Result</div>
+    <div class="total-score" id="totalScore">40<span>/80</span></div>
+    <div class="gold-line"></div>
+    <div class="result-msg" id="resultMsg">各領域をスライダーで採点してください。</div>
+    <div class="focus-box" id="focusBox"><p id="focusText"></p></div>
+  </div>
+
+  <div class="cta">
+    <button class="btn" onclick="resetAll()">リセット / Reset</button>
+    <button class="btn ghost" onclick="window.print()">結果を保存 / Save</button>
+    <p class="cta-note">
+      * この診断はあなたの気づきのためのツールです。正解はありません。<br>
+      This tool is for self-awareness. There are no right or wrong answers.
+    </p>
+  </div>
+
+  <div class="footer">
+    <p>© Shalom Investment Academy — All Rights Reserved</p>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+const domains = [
+  { id:1, emoji:'🕊️', ja:'心の平安',         en:'Peace of Mind',      color:'#7eb8d4' },
+  { id:2, emoji:'💪',  ja:'健康とエネルギー', en:'Health & Energy',    color:'#6dbf8a' },
+  { id:3, emoji:'👥',  ja:'豊かな人間関係',   en:'Rich Relationships', color:'#d4a843' },
+  { id:4, emoji:'💰',  ja:'経済的自由',       en:'Financial Freedom',  color:'#e8c15a' },
+  { id:5, emoji:'🎯',  ja:'価値ある理想と目標',en:'Goals & Ideals',    color:'#c07ad4' },
+  { id:6, emoji:'🔍',  ja:'自己洞察',         en:'Self-Insight',       color:'#d47a7a' },
+  { id:7, emoji:'✨',  ja:'自己の充実感',     en:'Self-Fulfillment',   color:'#7ab8d4' },
+  { id:8, emoji:'🎉',  ja:'楽しみ',           en:'Joy & Enjoyment',    color:'#b8922a' },
+];
+
+let scores = domains.map(() => 10);
+
+// ── Build domain cards ──────────────────────────────────────
+const grid = document.getElementById('domainsGrid');
+domains.forEach((d, i) => {
+  const card = document.createElement('div');
+  card.className = 'domain-card';
+  card.innerHTML = `
+    <div class="domain-header">
+      <div class="domain-number">${d.id}</div>
+      <div class="domain-info">
+        <h3><span class="emoji">${d.emoji}</span>${d.ja}</h3>
+        <div class="domain-en">${d.en}</div>
+      </div>
+    </div>
+    <div class="slider-wrap">
+      <input type="range" min="1" max="10" value="10" id="slider-${i}">
+      <div class="score-badge" id="badge-${i}">10</div>
+    </div>`;
+  grid.appendChild(card);
+
+  const slider = card.querySelector(`#slider-${i}`);
+  slider.addEventListener('input', () => {
+    scores[i] = +slider.value;
+    document.getElementById(`badge-${i}`).textContent = scores[i];
+    drawWheel();
+    updateResult();
+  });
+});
+
+// ── Draw Wheel ──────────────────────────────────────────────
+const canvas = document.getElementById('wheelCanvas');
+const ctx    = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+const cx = W/2, cy = H/2;
+const maxR   = W * 0.28;   // ホイールを小さめに → ラベル余白を確保
+const labelR = maxR + W * 0.095; // 写真に合わせてグラフに近く
+const n      = domains.length;
+
+function drawWheel() {
+  ctx.clearRect(0, 0, W, H);
+
+  // Grid rings
+  for (let r = 2; r <= 10; r += 2) {
+    ctx.beginPath();
+    for (let i = 0; i < n; i++) {
+      const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+      const x = cx + Math.cos(angle) * (r / 10) * maxR;
+      const y = cy + Math.sin(angle) * (r / 10) * maxR;
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = r === 10 ? 'rgba(184,146,42,0.35)' : 'rgba(184,146,42,0.15)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Ring label
+    ctx.font = '14px EB Garamond';
+    ctx.fillStyle = 'rgba(184,146,42,0.4)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(r, cx + (r / 10) * maxR + 12, cy);
+  }
+
+  // Spokes
+  for (let i = 0; i < n; i++) {
+    const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(angle) * maxR, cy + Math.sin(angle) * maxR);
+    ctx.strokeStyle = 'rgba(184,146,42,0.22)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // Score polygon
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+    const r = (scores[i] / 10) * maxR;
+    const x = cx + Math.cos(angle) * r;
+    const y = cy + Math.sin(angle) * r;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR);
+  grad.addColorStop(0, 'rgba(184,146,42,0.55)');
+  grad.addColorStop(1, 'rgba(184,146,42,0.12)');
+  ctx.fillStyle = grad;
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(212,168,67,0.9)';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // Score dots
+  for (let i = 0; i < n; i++) {
+    const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+    const r = (scores[i] / 10) * maxR;
+    const dx = cx + Math.cos(angle) * r;
+    const dy = cy + Math.sin(angle) * r;
+    ctx.beginPath();
+    ctx.arc(dx, dy, 7, 0, Math.PI * 2);
+    ctx.fillStyle = domains[i].color;
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+
+  // Bilingual labels
+  for (let i = 0; i < n; i++) {
+    const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+    const lx = cx + Math.cos(angle) * labelR;
+    const ly = cy + Math.sin(angle) * labelR;
+
+    ctx.save();
+    ctx.textAlign    = 'center';
+    ctx.textBaseline = 'middle';
+
+    // Emoji — 写真に合わせて大きく
+    ctx.font = '32px sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.97)';
+    ctx.fillText(domains[i].emoji, lx, ly - 20);
+
+    // Japanese — 写真のように大きくボールド
+    ctx.font = 'bold 20px Noto Sans JP';
+    ctx.fillStyle = 'rgba(245,234,208,1)';
+    ctx.fillText(domains[i].ja, lx, ly + 4);
+
+    // English — イタリック金色
+    ctx.font = 'italic 14px EB Garamond';
+    ctx.fillStyle = 'rgba(212,168,67,0.9)';
+    ctx.fillText(domains[i].en, lx, ly + 22);
+
+    ctx.restore();
+  }
+
+  // Center dot
+  ctx.beginPath();
+  ctx.arc(cx, cy, 7, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(184,146,42,0.95)';
+  ctx.fill();
+}
+
+// ── Update result ───────────────────────────────────────────
+function updateResult() {
+  const total = scores.reduce((a, b) => a + b, 0);
+  document.getElementById('totalScore').innerHTML = `${total}<span>/80</span>`;
+
+  const msgs = {
+    low:  '全体的にまだ余白があります。どの領域から育てていきますか？<br><em style="font-size:11px;color:rgba(212,168,67,0.6)">There is room to grow. Which area will you nurture first?</em>',
+    mid:  'バランスよく歩んでいます。さらに伸ばしたい領域はどこですか？<br><em style="font-size:11px;color:rgba(212,168,67,0.6)">You\'re walking in good balance. Where do you want to grow more?</em>',
+    high: '充実した人生を歩んでいます。この豊かさを誰かと分かち合いましょう。<br><em style="font-size:11px;color:rgba(212,168,67,0.6)">You are living a rich life. Share this abundance with someone.</em>',
+  };
+
+  const msgEl = document.getElementById('resultMsg');
+  if      (total <= 32) msgEl.innerHTML = msgs.low;
+  else if (total <= 56) msgEl.innerHTML = msgs.mid;
+  else                  msgEl.innerHTML = msgs.high;
+
+  // Focus domain
+  const minScore = Math.min(...scores);
+  const minIdx   = scores.indexOf(minScore);
+  const focusBox  = document.getElementById('focusBox');
+  const focusText = document.getElementById('focusText');
+  if (minScore < 7) {
+    focusBox.style.display = 'block';
+    focusText.innerHTML =
+      `✦ 最も伸びしろがある領域：<strong>${domains[minIdx].emoji} ${domains[minIdx].ja}</strong>（${minScore}点）<br>
+       <em style="font-size:11px;opacity:.7">Most growth potential: ${domains[minIdx].en} (${minScore}/10)</em>`;
+  } else {
+    focusBox.style.display = 'none';
+  }
+}
+
+// ── Canvas drag interaction ─────────────────────────────────
+let dragging = false;
+
+function getAngleScore(e) {
+  const rect  = canvas.getBoundingClientRect();
+  const scaleX = W / rect.width;
+  const scaleY = H / rect.height;
+  const px = (e.clientX - rect.left) * scaleX - cx;
+  const py = (e.clientY - rect.top)  * scaleY - cy;
+  const dist = Math.sqrt(px*px + py*py);
+  if (dist < 8 || dist > maxR * 1.2) return;
+
+  // Which segment are we closest to?
+  let angle = Math.atan2(py, px) + Math.PI / 2;
+  if (angle < 0) angle += Math.PI * 2;
+  if (angle >= Math.PI * 2) angle -= Math.PI * 2;
+
+  // Find closest domain index (use sector midpoint matching)
+  const sectorSize = (Math.PI * 2) / n;
+  const idx = Math.round(angle / sectorSize) % n;
+  const score = Math.max(1, Math.min(10, Math.round((dist / maxR) * 10)));
+
+  scores[idx] = score;
+  const slider = document.getElementById(`slider-${idx}`);
+  const badge  = document.getElementById(`badge-${idx}`);
+  if (slider) { slider.value = score; badge.textContent = score; }
+  drawWheel();
+  updateResult();
+}
+
+canvas.addEventListener('mousedown',  e => { dragging = true;  getAngleScore(e); });
+canvas.addEventListener('mousemove',  e => { if (dragging) getAngleScore(e); });
+canvas.addEventListener('mouseup',    () => dragging = false);
+canvas.addEventListener('mouseleave', () => dragging = false);
+canvas.addEventListener('touchstart', e => { dragging = true;  getAngleScore(e.touches[0]); }, {passive:true});
+canvas.addEventListener('touchmove',  e => { if (dragging) getAngleScore(e.touches[0]); }, {passive:true});
+canvas.addEventListener('touchend',   () => dragging = false);
+
+// ── Reset ───────────────────────────────────────────────────
+function resetAll() {
+  scores = domains.map(() => 10);
+  domains.forEach((_, i) => {
+    document.getElementById(`slider-${i}`).value = 10;
+    document.getElementById(`badge-${i}`).textContent = 10;
+  });
+  drawWheel();
+  updateResult();
+}
+
+// ── Init ────────────────────────────────────────────────────
+drawWheel();
+updateResult();
+</script>
+</body>
+</html>

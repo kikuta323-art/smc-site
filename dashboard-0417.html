@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>おはようダッシュボード｜4月17日</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #b8922a;
+    --gold-light: #e8d5a3;
+    --navy: #0f1e3c;
+    --bg: #f5f0e8;
+    --text-dark: #1e1608;
+    --text-mid: #3a2e1a;
+    --card: #ffffff;
+    --header-grad: linear-gradient(135deg, #2c1a08 0%, #3d2510 50%, #1e1608 100%);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); font-family: 'Noto Sans JP', sans-serif; color: var(--text-dark); }
+
+  /* ヘッダー */
+  .header {
+    background: var(--header-grad);
+    padding: 36px 24px 28px;
+    text-align: center;
+  }
+  .header-greeting { font-size: 0.78rem; letter-spacing: 0.3em; color: var(--gold-light); opacity: 0.8; margin-bottom: 6px; }
+  .header-name { font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 4px; }
+  .header-date { font-size: 0.82rem; color: var(--gold); letter-spacing: 0.15em; }
+  .gold-bar { width: 40px; height: 2px; background: var(--gold); margin: 14px auto 0; }
+
+  .container { max-width: 720px; margin: 0 auto; padding: 20px 16px 60px; }
+
+  /* カード共通 */
+  .card { background: var(--card); border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); margin-bottom: 18px; overflow: hidden; }
+  .card-header { background: var(--navy); padding: 12px 18px; display: flex; align-items: center; gap: 8px; }
+  .card-icon { font-size: 1rem; }
+  .card-title { font-size: 0.88rem; font-weight: 700; color: #fff; letter-spacing: 0.1em; }
+  .card-body { padding: 18px; }
+
+  /* 御言葉カード */
+  .scripture-text {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 2.0;
+    color: var(--navy);
+    padding: 14px 16px;
+    background: #faf6ee;
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 10px;
+  }
+  .scripture-en {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    line-height: 1.9;
+    color: var(--text-mid);
+    padding: 12px 16px;
+    background: #faf6ee;
+    border-left: 3px solid #8a7040;
+    border-radius: 0 8px 8px 0;
+  }
+  .scripture-ref { font-size: 0.75rem; color: var(--gold); font-weight: 700; letter-spacing: 0.12em; margin-bottom: 8px; }
+
+  /* 2カラムグリッド */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media(max-width: 560px){ .two-col { grid-template-columns: 1fr; } }
+
+  /* スケジュール */
+  .schedule-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0ece0; align-items: flex-start; }
+  .schedule-item:last-child { border-bottom: none; }
+  .sch-time { font-size: 0.78rem; font-weight: 700; color: var(--gold); min-width: 52px; padding-top: 2px; }
+  .sch-name { font-size: 0.88rem; color: var(--text-dark); line-height: 1.5; }
+  .sch-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .badge-blue { background: #dbeafe; color: #1e40af; }
+  .badge-red  { background: #fee2e2; color: #b91c1c; }
+  .badge-green{ background: #dcfce7; color: #166534; }
+
+  /* 優先タスク */
+  .task-item { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f0ece0; align-items: flex-start; }
+  .task-item:last-child { border-bottom: none; }
+  .task-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 6px; }
+  .task-dot.urgent { background: #dc2626; }
+  .task-content { font-size: 0.87rem; color: var(--text-dark); line-height: 1.6; }
+  .task-deadline { font-size: 0.72rem; color: #dc2626; font-weight: 700; }
+
+  /* 神様の命令カード */
+  .command-card { background: linear-gradient(135deg, var(--navy) 0%, #1e3a5f 100%); border-radius: 12px; padding: 22px 20px; text-align: center; margin-bottom: 18px; }
+  .command-icon { font-size: 1.6rem; margin-bottom: 10px; display: block; }
+  .command-jp { font-size: 1rem; font-weight: 700; color: var(--gold-light); line-height: 1.9; margin-bottom: 10px; }
+  .command-en { font-family: 'EB Garamond', serif; font-size: 0.95rem; font-style: italic; color: rgba(232,213,163,0.75); line-height: 1.8; }
+
+  /* 過去チャット */
+  .chat-link { display: block; padding: 9px 0; border-bottom: 1px solid #f0ece0; font-size: 0.85rem; color: var(--navy); text-decoration: none; font-weight: 700; }
+  .chat-link:last-child { border-bottom: none; }
+  .chat-link:hover { color: var(--gold); }
+  .chat-date { font-size: 0.72rem; color: #8a7040; font-weight: 400; margin-left: 6px; }
+
+  /* フッター */
+  .footer-workflow { background: var(--navy); border-radius: 12px; padding: 18px 20px; text-align: center; margin-top: 8px; }
+  .footer-step { font-size: 0.82rem; color: var(--gold-light); line-height: 2.0; }
+  .footer-step strong { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-greeting">Good Morning · おはようございます</div>
+  <div class="header-name">吉宏さん 🕊️</div>
+  <div class="header-date">2026年4月17日（金）</div>
+  <div class="gold-bar"></div>
+</div>
+
+<div class="container">
+
+  <!-- 御言葉カード -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-icon">📖</span>
+      <span class="card-title">今日の御言葉 ／ Today's Scripture</span>
+    </div>
+    <div class="card-body">
+      <div class="scripture-ref">詩篇 100:1-5 ／ 新改訳2017</div>
+      <div class="scripture-text">
+        全地よ、主に向かって喜び叫べ。<br>
+        喜びをもって主に仕えよ。<br>
+        感謝しながら、主の門に入れ。<br>
+        まことに主は恵み深く、その恵みはとこしえまで。
+      </div>
+      <div class="scripture-ref" style="margin-top:12px;">Psalms 100:1-5 ／ NASB</div>
+      <div class="scripture-en">
+        Shout joyfully to the Lord, all the earth.<br>
+        Serve the Lord with gladness.<br>
+        Enter His gates with thanksgiving.<br>
+        For the Lord is good; His lovingkindness is everlasting.
+      </div>
+    </div>
+  </div>
+
+  <!-- スケジュール＋優先タスク -->
+  <div class="two-col">
+
+    <!-- スケジュール -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">📅</span>
+        <span class="card-title">今日のスケジュール</span>
+      </div>
+      <div class="card-body">
+        <div class="schedule-item">
+          <div class="sch-time">05:00</div>
+          <div class="sch-name">🌅 起床・体操・黙想</div>
+        </div>
+        <div class="schedule-item">
+          <div class="sch-time">06:00</div>
+          <div class="sch-name">📖 SIA御言葉配信</div>
+        </div>
+        <div class="schedule-item">
+          <div class="sch-time">06:30</div>
+          <div class="sch-name">💻 計画・AI</div>
+        </div>
+        <div class="schedule-item">
+          <div class="sch-time">07:00</div>
+          <div class="sch-name">🧹 清掃・整理・朝食</div>
+        </div>
+        <div class="schedule-item">
+          <div class="sch-time">08:00</div>
+          <div class="sch-name">💰 タイミングトレード<span class="sch-badge badge-blue">Zoom</span></div>
+        </div>
+        <div class="schedule-item">
+          <div class="sch-time">12:00</div>
+          <div class="sch-name">🍱 昼休み</div>
+        </div>
+        <div class="schedule-item">
+          <div class="sch-time">14:00</div>
+          <div class="sch-name">🖥️ 市況解説</div>
+        </div>
+        <div class="schedule-item">
+          <div class="sch-time">15:30</div>
+          <div class="sch-name">🏥 松田病院 レントゲン診察<span class="sch-badge badge-red">要確認</span></div>
+        </div>
+        <div class="schedule-item">
+          <div class="sch-time">16:00</div>
+          <div class="sch-name">👔 社長ミーティング</div>
+        </div>
+        <div class="schedule-item">
+          <div class="sch-time">18:00</div>
+          <div class="sch-name">🛀 入浴・夕食</div>
+        </div>
+        <div class="schedule-item">
+          <div class="sch-time">21:00</div>
+          <div class="sch-name">😴 感謝・祈り・就寝</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 優先タスク -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">✅</span>
+        <span class="card-title">優先タスク</span>
+      </div>
+      <div class="card-body">
+        <div class="task-item">
+          <div class="task-dot urgent"></div>
+          <div class="task-content">
+            SIA Stripe支払い設定<br>
+            <span class="task-deadline">⚠️ 本日締切 4/17</span>
+          </div>
+        </div>
+        <div class="task-item">
+          <div class="task-dot urgent"></div>
+          <div class="task-content">
+            松田病院 足の経過確認<br>
+            <span class="task-deadline">本日 15:30〜</span>
+          </div>
+        </div>
+        <div class="task-item">
+          <div class="task-dot"></div>
+          <div class="task-content">固定資産税 銀行振替変更<span class="task-deadline">　4月中</span></div>
+        </div>
+        <div class="task-item">
+          <div class="task-dot"></div>
+          <div class="task-content">車検・タイヤ交換<span class="task-deadline">　4/20まで</span></div>
+        </div>
+        <div class="task-item">
+          <div class="task-dot"></div>
+          <div class="task-content">Googleコンタクト整理</div>
+        </div>
+        <div class="task-item">
+          <div class="task-dot"></div>
+          <div class="task-content">カード整理<span class="task-deadline">　4月末まで</span></div>
+        </div>
+        <div class="task-item">
+          <div class="task-dot"></div>
+          <div class="task-content">リース契約書類提出</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 神様の命令 -->
+  <div class="command-card">
+    <span class="command-icon">✨</span>
+    <div class="command-jp">
+      今日、一つだけ「ありがとう」を声に出してみましょう。<br>
+      感謝は言葉になるとき、一日を変える力を持ちます。
+    </div>
+    <div class="command-en">
+      Today, let just one "thank you" rise to your lips.<br>
+      Gratitude spoken aloud has the power to transform your whole day.
+    </div>
+  </div>
+
+  <!-- 過去チャット -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-icon">🕐</span>
+      <span class="card-title">最近のチャット履歴</span>
+    </div>
+    <div class="card-body">
+      <a class="chat-link" href="https://claude.ai/chat/00640782-d38d-4df8-b3c2-09d87478b083" target="_blank">
+        📅 EEの13週クリニック日程登録<span class="chat-date">4/16</span>
+      </a>
+      <a class="chat-link" href="https://claude.ai/chat/fb5dc3a5-3936-4ee8-b5fd-fce7eda8d1dc" target="_blank">
+        🏥 松田病院のレントゲン予約<span class="chat-date">4/16</span>
+      </a>
+      <a class="chat-link" href="https://claude.ai/chat/1a82d603-def0-4ca4-90b1-c7474d66b86c" target="_blank">
+        🌐 Shalomミッションセンター HP作成<span class="chat-date">4/16</span>
+      </a>
+      <a class="chat-link" href="https://claude.ai/chat/dbd4f3b0-34ca-420d-a542-9adee6667f4a" target="_blank">
+        🕊️ Daily Shalom 詩篇99:7-9<span class="chat-date">4/15</span>
+      </a>
+      <a class="chat-link" href="https://claude.ai/chat/d9d6142f-8c72-4d3b-865c-b1f0c1ddac71" target="_blank">
+        ✏️ Shalom Academy → Mission Center 名称変更<span class="chat-date">4/15</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- 3ステップワークフロー -->
+  <div class="footer-workflow">
+    <div class="footer-step">
+      <strong>① Daily Shalom配信</strong> → 御言葉＋黙想 → HTML公開 → LINEグループ送信<br>
+      <strong>② おはよう</strong> → ダッシュボード表示（今日はこの画面）<br>
+      <strong>③ タイミングトレード</strong> → Zoom 08:00〜09:30 🎯
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

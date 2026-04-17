@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIA メンバーダッシュボード</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+JP:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #b8922a; --gold-light: #d4a843; --gold-pale: #f5ead0;
+    --navy: #0d2035; --navy-mid: #1a3a5c;
+    --bg: #0a0604;
+    --surface: rgba(255,255,255,0.05); --surface2: rgba(255,255,255,0.1);
+    --border: rgba(184,146,42,0.25); --border2: rgba(184,146,42,0.45);
+    --text: #f0e6d0; --text-dim: rgba(240,230,208,0.6); --text-faint: rgba(240,230,208,0.3);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans JP', sans-serif; background: var(--bg); min-height: 100vh; color: var(--text); }
+
+  /* LOGIN */
+  #login-screen { position: fixed; inset: 0; background: linear-gradient(160deg,#0a0604,#130c06,#0d0906); display: flex; align-items: center; justify-content: center; z-index: 100; transition: opacity 0.6s; }
+  #login-screen.hidden { opacity: 0; pointer-events: none; }
+  .login-box { width: 340px; text-align: center; animation: fadeUp 0.7s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+  .login-dove { font-size: 2.2rem; margin-bottom: 8px; }
+  .login-title { font-family: 'Cormorant Garamond',serif; font-size: 2rem; font-weight: 300; color: var(--gold-light); letter-spacing: 0.1em; margin-bottom: 3px; }
+  .login-sub { font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 24px; }
+  .login-verse { font-family: 'EB Garamond',serif; font-style: italic; font-size: 0.85rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 24px; padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
+  .login-field { width: 100%; background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px; padding: 11px 14px; color: var(--text); font-family: 'Noto Sans JP',sans-serif; font-size: 0.88rem; outline: none; margin-bottom: 10px; transition: border-color 0.2s; }
+  .login-field:focus { border-color: var(--gold-light); }
+  .login-field::placeholder { color: var(--text-faint); }
+  .login-btn { width: 100%; background: linear-gradient(135deg,var(--gold),var(--gold-light)); border: none; border-radius: 8px; padding: 12px; color: #0a0604; font-family: 'Noto Sans JP',sans-serif; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.12em; cursor: pointer; transition: opacity 0.2s; }
+  .login-btn:hover { opacity: 0.88; }
+  .login-error { font-size: 0.72rem; color: #e05050; margin-top: 8px; min-height: 18px; }
+
+  /* DASHBOARD */
+  #dashboard { display: none; min-height: 100vh; }
+  #dashboard.visible { display: block; animation: fadeIn 0.7s ease both; }
+  @keyframes fadeIn { from{opacity:0}to{opacity:1} }
+
+  /* TOPBAR */
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; background: linear-gradient(90deg,rgba(13,32,53,0.97),rgba(26,58,92,0.85)); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50; backdrop-filter: blur(8px); }
+  .topbar-left { display: flex; align-items: center; gap: 10px; }
+  .topbar-logo { font-family: 'Cormorant Garamond',serif; font-size: 1.1rem; font-weight: 600; color: var(--gold-light); letter-spacing: 0.08em; }
+  .topbar-sub { font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.12em; }
+  .topbar-right { display: flex; align-items: center; gap: 10px; }
+  .member-badge { font-size: 0.68rem; color: var(--gold-light); background: rgba(184,146,42,0.15); border: 1px solid var(--border2); border-radius: 20px; padding: 3px 12px; }
+  .topbar-btn { font-size: 0.62rem; color: var(--text-faint); background: none; border: 1px solid var(--border); border-radius: 5px; padding: 3px 9px; cursor: pointer; letter-spacing: 0.08em; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .topbar-btn:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* MAIN */
+  .main { padding: 14px; max-width: 820px; margin: 0 auto; }
+
+  /* WELCOME */
+  .welcome-card { background: linear-gradient(135deg,rgba(26,58,92,0.5),rgba(13,32,53,0.7)); border: 1px solid var(--border2); border-radius: 12px; padding: 18px 22px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .welcome-name { font-size: 1.1rem; font-weight: 700; color: var(--gold-light); margin-bottom: 3px; }
+  .welcome-sub { font-size: 0.72rem; color: var(--text-dim); }
+  .verse-sm { font-family: 'EB Garamond',serif; font-style: italic; font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; text-align: right; }
+  .verse-ref-sm { font-size: 0.6rem; color: var(--gold); margin-top: 3px; text-align: right; font-weight: 700; }
+
+  /* SEC LABEL */
+  .sec-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 9px; display: flex; align-items: center; gap: 6px; }
+  .sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* CARDS */
+  .card { background: var(--surface2); border: 1px solid var(--border); border-radius: 11px; padding: 14px 16px; }
+  .mb { margin-bottom: 12px; }
+
+  /* 2-COL */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  @media(max-width:560px){ .grid2 { grid-template-columns: 1fr; } }
+
+  /* TASKS */
+  .task-row { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid rgba(184,146,42,0.08); }
+  .task-row:last-child { border-bottom: none; }
+  .task-check { width: 16px; height: 16px; border: 2px solid var(--gold); border-radius: 4px; cursor: pointer; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+  .task-check.done { background: var(--gold); }
+  .task-check.done::after { content: '✓'; font-size: 10px; color: #0a0604; font-weight: 700; }
+  .task-text { font-size: 0.8rem; color: #f0e6d0; line-height: 1.5; flex: 1; font-weight: 500; }
+  .task-text.done { text-decoration: line-through; color: var(--text-faint); }
+  .task-priority { font-size: 0.58rem; padding: 1px 6px; border-radius: 10px; flex-shrink: 0; margin-top: 2px; }
+  .pri-high { background: rgba(224,80,80,0.2); color: #e08080; border: 1px solid rgba(224,80,80,0.3); }
+  .pri-mid { background: rgba(212,168,67,0.15); color: var(--gold-light); border: 1px solid var(--border); }
+  .task-add-row { display: flex; gap: 7px; margin-top: 10px; }
+  .task-input { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 7px; padding: 8px 11px; color: var(--text); font-family: 'Noto Sans JP',sans-serif; font-size: 0.78rem; outline: none; transition: border-color 0.2s; }
+  .task-input:focus { border-color: var(--gold); }
+  .task-input::placeholder { color: var(--text-faint); }
+  .btn-add { background: linear-gradient(135deg,var(--gold),var(--gold-light)); border: none; border-radius: 7px; padding: 8px 14px; color: #0a0604; font-weight: 700; font-size: 0.72rem; cursor: pointer; white-space: nowrap; }
+
+  /* SCHEDULE */
+  .sched-display { font-size: 0.8rem; color: #f0e6d0; line-height: 1.9; white-space: pre-line; min-height: 40px; font-weight: 400; }
+  .sched-edit-area { width: 100%; min-height: 120px; background: var(--surface); border: 1px solid var(--border2); border-radius: 7px; padding: 9px 11px; color: var(--text); font-family: 'Noto Sans JP',sans-serif; font-size: 0.78rem; line-height: 1.85; resize: vertical; outline: none; display: none; margin-top: 6px; }
+  .sched-edit-area:focus { border-color: var(--gold); }
+  .mini-btn { font-size: 0.6rem; background: none; border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; color: var(--text-dim); cursor: pointer; transition: all 0.2s; margin-left: 6px; }
+  .mini-btn:hover { color: var(--gold); border-color: var(--gold); }
+  .mini-btn-gold { font-size: 0.6rem; background: linear-gradient(135deg,var(--gold),var(--gold-light)); border: none; border-radius: 4px; padding: 2px 9px; color: #0a0604; font-weight: 700; cursor: pointer; margin-left: 6px; display: none; }
+
+  /* MEMO */
+  .memo-area { width: 100%; min-height: 90px; background: var(--surface); border: 1px solid var(--border); border-radius: 7px; padding: 10px 12px; color: var(--text); font-family: 'Noto Sans JP',sans-serif; font-size: 0.8rem; line-height: 1.75; resize: vertical; outline: none; transition: border-color 0.2s; }
+  .memo-area:focus { border-color: var(--gold); }
+  .btn-save { background: linear-gradient(135deg,var(--gold),var(--gold-light)); border: none; border-radius: 6px; padding: 7px 16px; color: #0a0604; font-weight: 700; font-size: 0.72rem; letter-spacing: 0.1em; cursor: pointer; }
+  .saved-msg { font-size: 0.68rem; color: var(--gold); opacity: 0; transition: opacity 0.3s; padding-top: 5px; }
+  .saved-msg.show { opacity: 1; }
+
+  /* GOOGLE LINKS */
+  .glinks { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+  .glink { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 12px 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--text-dim); font-size: 0.68rem; transition: all 0.2s; }
+  .glink:hover { background: rgba(184,146,42,0.08); border-color: var(--gold); color: var(--gold); }
+  .glink-icon { font-size: 1.3rem; }
+
+  /* SIA CONTENT */
+  .content-card { background: linear-gradient(135deg,rgba(13,32,53,0.7),rgba(7,17,30,0.9)); border: 1px solid rgba(26,58,92,0.7); border-top: 2px solid var(--gold); border-radius: 11px; padding: 14px 16px; }
+  .content-text { font-size: 0.8rem; line-height: 1.9; color: rgba(240,230,208,0.85); }
+
+  /* FOOTER */
+  .gold-line { height: 1px; background: linear-gradient(90deg,transparent,var(--gold),transparent); margin: 12px 0 14px; }
+  .footer { text-align: center; padding: 0 8px 28px; font-size: 0.63rem; color: var(--text-faint); line-height: 1.9; }
+
+  /* ADMIN BADGE */
+  .admin-note { font-size: 0.65rem; color: rgba(212,168,67,0.5); text-align: center; margin-bottom: 10px; padding: 6px; border: 1px dashed rgba(184,146,42,0.2); border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-dove">🕊️</div>
+    <div class="login-title">Shalom Mission Center</div>
+    <div class="login-sub">Member Dashboard · 会員専用</div>
+    <div class="login-verse">
+      「新しい歌を主に向かって歌え。主は奇しいことをされたから。」<br>
+      <em>"O sing to the Lord a new song, for He has done wonderful things."</em><br>
+      詩篇 98:1
+    </div>
+    <input type="text" id="login-id" class="login-field" placeholder="会員ID（例：member01）" autocomplete="username" />
+    <input type="password" id="login-pw" class="login-field" placeholder="パスワード" autocomplete="current-password" />
+    <button class="login-btn" onclick="doLogin()">ログイン / Login</button>
+    <div class="login-error" id="login-error"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <div>
+        <div class="topbar-logo">🕊️ Shalom Mission Center</div>
+        <div class="topbar-sub">Member Dashboard</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="member-badge" id="member-badge">会員</div>
+      <div class="topbar-btn" id="topbar-date"></div>
+      <a href="https://shalom-academy.netlify.app/" class="topbar-btn">← HP</a>
+      <button class="topbar-btn" onclick="doLogout()">ログアウト</button>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- Welcome -->
+    <div class="welcome-card">
+      <div>
+        <div class="welcome-name" id="welcome-name">ようこそ 🙏</div>
+        <div class="welcome-sub" id="welcome-sub"></div>
+      </div>
+      <div>
+        <div class="verse-sm">「新しい歌を主に向かって歌え。<br>主は奇しいことをされたから。」</div>
+        <div class="verse-ref-sm">詩篇 98:1（新改訳2017）</div>
+      </div>
+    </div>
+
+    <!-- Admin note (visible only to yoshihiro) -->
+    <div class="admin-note" id="admin-note" style="display:none;">
+      👑 管理者モード — 全会員のデータを管理できます
+    </div>
+
+    <!-- Schedule + Tasks -->
+    <div class="grid2">
+
+      <!-- Schedule -->
+      <div class="card">
+        <div class="sec-label">
+          📅 スケジュール
+          <button class="mini-btn" id="sched-edit-btn" onclick="toggleSched()">✏️ 編集</button>
+          <button class="mini-btn-gold" id="sched-save-btn" onclick="saveSched()">💾 保存</button>
+        </div>
+        <div id="sched-display" class="sched-display" style="color:var(--text-faint);">「✏️ 編集」で今日の予定を入力してください</div>
+        <textarea id="sched-input" class="sched-edit-area" placeholder="例：&#10;08:00　朝の勉強&#10;10:00　SIAセミナー視聴&#10;14:00　トレード確認"></textarea>
+      </div>
+
+      <!-- Tasks -->
+      <div class="card">
+        <div class="sec-label">✅ マイタスク</div>
+        <div id="task-list"></div>
+        <div class="task-add-row">
+          <input type="text" class="task-input" id="task-input" placeholder="新しいタスクを追加…" onkeydown="if(event.key==='Enter')addTask()" />
+          <button class="btn-add" onclick="addTask()">＋追加</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Memo -->
+    <div class="card mb">
+      <div class="sec-label">📝 マイメモ</div>
+      <textarea class="memo-area" id="memo-area" placeholder="自由にメモを入力してください…&#10;学んだこと・気づき・アイデアなど"></textarea>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:8px;">
+        <button class="btn-save" onclick="saveMemo()">保存する</button>
+        <div class="saved-msg" id="memo-saved">✓ 保存しました</div>
+      </div>
+    </div>
+
+    <!-- SIA Content -->
+    <div class="content-card mb">
+      <div class="sec-label" style="color:var(--gold-light);">🕊️ 今日のメッセージ</div>
+      <div class="content-text">
+        新しい歌を歌え――この詩篇98篇は、心の内側が自然にあふれ出す賛美を描いています。神の勝利はご自身の力から生まれ、私たちは安心して身を委ねられます。神の救いはすでに示されている光――日々の小さな恵みの中に静かに現れています。<br><br>
+        今日も、主の勝利の中を歩みましょう。
+      </div>
+    </div>
+
+    <!-- Google Links -->
+    <div class="card mb">
+      <div class="sec-label">🔗 Googleサービス</div>
+      <div class="glinks">
+        <a class="glink" href="https://calendar.google.com" target="_blank"><div class="glink-icon">📅</div><div>カレンダー</div></a>
+        <a class="glink" href="https://tasks.google.com" target="_blank"><div class="glink-icon">✅</div><div>タスク</div></a>
+        <a class="glink" href="https://keep.google.com" target="_blank"><div class="glink-icon">📒</div><div>Keep</div></a>
+      </div>
+    </div>
+
+    <div class="gold-line"></div>
+    <div class="footer">
+      <div>神様を愛し、隣人を愛する — お金の黄金律を学んで、正しくお金を使う知恵を身につけよう</div>
+      <div style="margin-top:3px;font-family:'EB Garamond',serif;font-style:italic;">Love God, Love Neighbor — Shalom Mission Center © 2026</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ── 会員リスト（ID: {name, pass, isAdmin}）──
+  const MEMBERS = {
+    'yoshihiro': { name: '菊田 吉宏',   pass: 'shalom2026', isAdmin: true },
+    'akiko':     { name: '髙橋 亜紀子', pass: 'sia2026',    isAdmin: false },
+    'kazuki':    { name: '佐藤 香月',   pass: 'sia2026',    isAdmin: false },
+  };
+
+  let currentUser = null;
+
+  // ── LOGIN ──
+  function doLogin() {
+    const id = document.getElementById('login-id').value.trim().toLowerCase();
+    const pw = document.getElementById('login-pw').value;
+    const member = MEMBERS[id];
+    if (member && member.pass === pw) {
+      currentUser = { id, ...member };
+      sessionStorage.setItem('sia_user', JSON.stringify(currentUser));
+      document.getElementById('login-screen').classList.add('hidden');
+      setTimeout(() => {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('dashboard').classList.add('visible');
+        initDashboard();
+      }, 600);
+    } else {
+      document.getElementById('login-error').textContent = 'IDまたはパスワードが正しくありません。';
+    }
+  }
+  function doLogout() { sessionStorage.removeItem('sia_user'); location.reload(); }
+
+  document.getElementById('login-id').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('login-pw').focus(); });
+  document.getElementById('login-pw').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+  // Auto-login
+  const saved = sessionStorage.getItem('sia_user');
+  if (saved) {
+    currentUser = JSON.parse(saved);
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('dashboard').classList.add('visible');
+    initDashboard();
+  }
+
+  // ── INIT ──
+  function initDashboard() {
+    const now = new Date();
+    const days = ['日','月','火','水','木','金','土'];
+    const d = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日（${days[now.getDay()]}）`;
+    const h = now.getHours();
+    const greet = h < 10 ? 'おはようございます' : h < 17 ? 'こんにちは' : 'こんばんは';
+
+    document.getElementById('welcome-name').textContent = `${currentUser.name} さん、${greet} 🙏`;
+    document.getElementById('welcome-sub').textContent = `${d} · SIA会員ダッシュボード`;
+    document.getElementById('topbar-date').textContent = d;
+    document.getElementById('member-badge').textContent = currentUser.isAdmin ? '👑 管理者' : '🌿 会員';
+    if (currentUser.isAdmin) document.getElementById('admin-note').style.display = 'block';
+
+    loadSched();
+    loadTasks();
+    loadMemo();
+  }
+
+  // ── STORAGE KEY（会員ごとに分離） ──
+  function key(type) { return `sia_${currentUser.id}_${type}`; }
+
+  // ── SCHEDULE ──
+  function loadSched() {
+    const v = localStorage.getItem(key('sched'));
+    const el = document.getElementById('sched-display');
+    if (v && v.trim()) { el.textContent = v; el.style.color = '#f0e6d0'; }
+    else { el.textContent = '「✏️ 編集」で今日の予定を入力してください'; el.style.color = 'var(--text-faint)'; }
+  }
+  function toggleSched() {
+    document.getElementById('sched-input').value = localStorage.getItem(key('sched')) || '';
+    document.getElementById('sched-input').style.display = 'block';
+    document.getElementById('sched-display').style.display = 'none';
+    document.getElementById('sched-edit-btn').style.display = 'none';
+    document.getElementById('sched-save-btn').style.display = 'inline-block';
+    document.getElementById('sched-input').focus();
+  }
+  function saveSched() {
+    const v = document.getElementById('sched-input').value;
+    localStorage.setItem(key('sched'), v);
+    document.getElementById('sched-display').textContent = v || '「✏️ 編集」で今日の予定を入力してください';
+    document.getElementById('sched-display').style.color = v ? '#f0e6d0' : 'var(--text-faint)';
+    document.getElementById('sched-input').style.display = 'none';
+    document.getElementById('sched-display').style.display = 'block';
+    document.getElementById('sched-edit-btn').style.display = 'inline-block';
+    document.getElementById('sched-save-btn').style.display = 'none';
+  }
+
+  // ── TASKS ──
+  function loadTasks() {
+    const tasks = JSON.parse(localStorage.getItem(key('tasks')) || '[]');
+    renderTasks(tasks);
+  }
+  function renderTasks(tasks) {
+    const list = document.getElementById('task-list');
+    if (tasks.length === 0) {
+      list.innerHTML = '<div style="font-size:0.75rem;color:var(--text-faint);padding:8px 0;">タスクはまだありません。下から追加してください。</div>';
+      return;
+    }
+    list.innerHTML = tasks.map((t, i) => `
+      <div class="task-row">
+        <div class="task-check ${t.done ? 'done' : ''}" onclick="toggleTask(${i})"></div>
+        <div class="task-text ${t.done ? 'done' : ''}">${t.text}</div>
+        <div style="font-size:0.65rem;color:var(--text-faint);cursor:pointer;padding:2px 4px;" onclick="deleteTask(${i})">✕</div>
+      </div>`).join('');
+  }
+  function addTask() {
+    const input = document.getElementById('task-input');
+    const text = input.value.trim();
+    if (!text) return;
+    const tasks = JSON.parse(localStorage.getItem(key('tasks')) || '[]');
+    tasks.unshift({ text, done: false });
+    localStorage.setItem(key('tasks'), JSON.stringify(tasks));
+    renderTasks(tasks);
+    input.value = '';
+  }
+  function toggleTask(i) {
+    const tasks = JSON.parse(localStorage.getItem(key('tasks')) || '[]');
+    tasks[i].done = !tasks[i].done;
+    localStorage.setItem(key('tasks'), JSON.stringify(tasks));
+    renderTasks(tasks);
+  }
+  function deleteTask(i) {
+    const tasks = JSON.parse(localStorage.getItem(key('tasks')) || '[]');
+    tasks.splice(i, 1);
+    localStorage.setItem(key('tasks'), JSON.stringify(tasks));
+    renderTasks(tasks);
+  }
+
+  // ── MEMO ──
+  function saveMemo() {
+    localStorage.setItem(key('memo'), document.getElementById('memo-area').value);
+    const s = document.getElementById('memo-saved');
+    s.classList.add('show');
+    setTimeout(() => s.classList.remove('show'), 2000);
+  }
+  function loadMemo() {
+    const m = localStorage.getItem(key('memo'));
+    if (m) document.getElementById('memo-area').value = m;
+  }
+</script>
+</body>
+</html>

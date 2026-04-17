@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Shalom｜2026年4月14日（火）</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a3a5c;
+    --navy-dark: #0d2035;
+    --gold: #b8922a;
+    --gold-light: #d4a843;
+    --gold-pale: #f5ead0;
+    --bg1: #e8f4f8;
+    --bg2: #f0ebe0;
+    --bg3: #faf6ee;
+    --blue-light: #f0f7ff;
+    --blue-mid: #e8f0f8;
+    --white: #ffffff;
+    --text-dark: #1a1a1a;
+    --text-mid: #3a3a3a;
+    --text-soft: #5a5a5a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: linear-gradient(160deg, var(--bg1), var(--bg2), var(--bg3));
+    min-height: 100vh;
+    color: var(--text-dark);
+    line-height: 1.8;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(160deg, var(--navy), var(--navy-dark));
+    padding: 36px 32px 28px;
+    text-align: center;
+    border-radius: 0 0 24px 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 6px 24px rgba(13,32,53,0.25);
+  }
+
+  .header-label {
+    font-family: 'EB Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .header-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 36px;
+    font-weight: 500;
+    color: var(--white);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+
+  .header-title span {
+    color: var(--gold-light);
+  }
+
+  .header-date {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 1px;
+    margin-top: 10px;
+  }
+
+  .header-ref {
+    display: inline-block;
+    margin-top: 14px;
+    font-family: 'EB Garamond', serif;
+    font-size: 14px;
+    color: var(--gold-light);
+    border: 1px solid rgba(212,168,67,0.4);
+    border-radius: 20px;
+    padding: 4px 16px;
+    letter-spacing: 1px;
+  }
+
+  /* SECTION CARDS */
+  .card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 28px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(26,58,92,0.07);
+  }
+
+  .card-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .card-label-icon {
+    font-size: 18px;
+  }
+
+  .card-label-text {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .card-label-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--gold-pale), transparent);
+  }
+
+  /* SCRIPTURE CARD */
+  .scripture-card {
+    background: var(--gold-pale);
+    border-left: 5px solid var(--gold);
+    border-radius: 12px;
+    padding: 24px 24px;
+    margin-bottom: 14px;
+  }
+
+  .scripture-lang {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .scripture-text-ja {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    line-height: 2;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+  }
+
+  .scripture-text-en {
+    font-family: 'EB Garamond', serif;
+    font-size: 16px;
+    font-style: italic;
+    line-height: 1.9;
+    color: var(--text-mid);
+  }
+
+  .scripture-source {
+    font-size: 12px;
+    color: var(--gold);
+    margin-top: 12px;
+    text-align: right;
+    font-family: 'EB Garamond', serif;
+  }
+
+  /* MEDITATION CARD */
+  .meditation-card {
+    background: var(--white);
+    border-top: 3px solid var(--gold);
+    border-radius: 12px;
+    padding: 22px 22px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(184,146,42,0.1);
+  }
+
+  .meditation-author {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+
+  .meditation-text {
+    font-size: 14.5px;
+    line-height: 2;
+    color: var(--text-mid);
+  }
+
+  .meditation-section {
+    margin-bottom: 18px;
+  }
+
+  .meditation-section-title {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--navy);
+    margin-bottom: 8px;
+    padding-left: 10px;
+    border-left: 3px solid var(--gold-light);
+  }
+
+  .meditation-bullets {
+    list-style: none;
+    padding-left: 14px;
+  }
+
+  .meditation-bullets li {
+    font-size: 13.5px;
+    color: var(--text-soft);
+    line-height: 1.9;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .meditation-bullets li::before {
+    content: '・';
+    position: absolute;
+    left: 0;
+    color: var(--gold-light);
+  }
+
+  /* PRAYER CARD */
+  .prayer-card {
+    background: linear-gradient(135deg, var(--blue-light), var(--blue-mid));
+    border-left: 4px solid var(--navy);
+    border-radius: 12px;
+    padding: 22px 22px;
+    margin-bottom: 14px;
+  }
+
+  .prayer-lang-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--navy);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .prayer-text-ja {
+    font-size: 14.5px;
+    line-height: 2.1;
+    color: var(--navy-dark);
+    margin-bottom: 20px;
+  }
+
+  .prayer-text-en {
+    font-family: 'EB Garamond', serif;
+    font-size: 15.5px;
+    font-style: italic;
+    line-height: 1.9;
+    color: #2a4a6e;
+  }
+
+  .prayer-amen {
+    font-weight: 700;
+    font-style: normal;
+    color: var(--navy);
+  }
+
+  /* GOD'S WORD CARD */
+  .gods-word-card {
+    background: linear-gradient(160deg, var(--navy-dark), var(--navy));
+    border-radius: 16px;
+    padding: 28px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(13,32,53,0.3);
+  }
+
+  .gods-word-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .gods-word-label-text {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+
+  .gods-word-label-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(212,168,67,0.4), transparent);
+  }
+
+  .gods-word-ja {
+    font-size: 15px;
+    line-height: 2;
+    color: rgba(255,255,255,0.92);
+    margin-bottom: 16px;
+  }
+
+  .gods-word-en {
+    font-family: 'EB Garamond', serif;
+    font-size: 16px;
+    font-style: italic;
+    line-height: 1.9;
+    color: var(--gold-pale);
+  }
+
+  /* FOOTER */
+  .footer {
+    background: linear-gradient(160deg, var(--navy), var(--navy-dark));
+    border-radius: 16px;
+    padding: 24px 28px;
+    text-align: center;
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .footer-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 16px;
+    color: var(--gold-light);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+
+  .footer-steps {
+    list-style: none;
+    margin: 12px 0;
+    color: rgba(255,255,255,0.75);
+    font-size: 12.5px;
+  }
+
+  .footer-steps li {
+    margin-bottom: 4px;
+  }
+
+  .footer-steps li span {
+    color: var(--gold-light);
+    font-weight: 700;
+  }
+
+  .footer-copy {
+    margin-top: 14px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 480px) {
+    .header { padding: 28px 20px 22px; }
+    .header-title { font-size: 28px; }
+    .card { padding: 22px 18px; }
+    .scripture-card { padding: 18px 16px; }
+    .meditation-card { padding: 18px 16px; }
+    .prayer-card { padding: 18px 16px; }
+    .gods-word-card { padding: 22px 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-label">Shalom Investment Academy</div>
+    <div class="header-title">🕊️ Daily <span>Shalom</span></div>
+    <div class="header-date">2026年4月14日（火）</div>
+    <div class="header-ref">詩篇 97篇 10–12節</div>
+  </div>
+
+  <!-- SCRIPTURE -->
+  <div class="card">
+    <div class="card-label">
+      <span class="card-label-icon">📖</span>
+      <span class="card-label-text">御言葉 · Scripture</span>
+      <span class="card-label-line"></span>
+    </div>
+    <div class="scripture-card">
+      <div class="scripture-lang">新改訳2017</div>
+      <div class="scripture-text-ja">
+        主を愛する者たちよ、悪を憎め。主はご自分の聖徒たちのたましいを守り、悪者の手から彼らを救い出される。光は正しい者のために蒔かれ、喜びは心の直ぐな者のために蒔かれている。正しい者よ、主にあって喜べ。その聖なる御名に感謝せよ。
+      </div>
+      <div class="scripture-lang">NASB</div>
+      <div class="scripture-text-en">
+        "Hate evil, you who love the Lord, Who preserves the souls of His godly ones; He delivers them from the hand of the wicked. Light is sown like seed for the righteous And gladness for the upright in heart. Be glad in the Lord, you righteous ones, And give thanks to His holy name."
+      </div>
+      <div class="scripture-source">— 詩篇 97:10–12 （新改訳2017 / NASB）</div>
+    </div>
+  </div>
+
+  <!-- MEDITATION (Copilot) -->
+  <div class="card">
+    <div class="card-label">
+      <span class="card-label-icon">🌿</span>
+      <span class="card-label-text">黙想 · Meditation</span>
+      <span class="card-label-line"></span>
+    </div>
+    <div class="meditation-card">
+      <div class="meditation-author">※ 以下の黙想はCopilotが作成したものをそのまま掲載しています</div>
+
+      <div class="meditation-section">
+        <div class="meditation-section-title">① 「悪を憎む」——心の方向性のこと</div>
+        <div class="meditation-text">
+          ここで言う「悪を憎む」は、攻撃的な姿勢ではなく、心が神の方へ向くと自然に離れていくものを指しています。
+        </div>
+        <ul class="meditation-bullets">
+          <li>不安に飲まれる心</li>
+          <li>自分を責めすぎる心</li>
+          <li>他人の評価に縛られる心</li>
+          <li>霊的な鈍さや疲れ</li>
+        </ul>
+        <div class="meditation-text" style="margin-top:10px;">
+          神を愛する者は、これらを「嫌だな」と感じるように整えられていきます。
+        </div>
+      </div>
+
+      <div class="meditation-section">
+        <div class="meditation-section-title">② 「主は敬虔な者のいのちを守られる」</div>
+        <div class="meditation-text">
+          これは外側の状況よりも、魂の中心が守られるという約束。
+        </div>
+        <ul class="meditation-bullets">
+          <li>心が折れそうな時</li>
+          <li>孤独を感じる時</li>
+          <li>先が見えない時</li>
+        </ul>
+        <div class="meditation-text" style="margin-top:10px;">
+          その中心にある「いのちの火」は、神が消えないように守ってくださる。
+        </div>
+      </div>
+
+      <div class="meditation-section">
+        <div class="meditation-section-title">③ 「光は種のように蒔かれる」</div>
+        <div class="meditation-text">
+          光は一気に眩しくなるのではなく、静かに、深く、土の中で育つように心に蒔かれる。
+        </div>
+        <ul class="meditation-bullets">
+          <li>今は見えなくても</li>
+          <li>すぐに結果が出なくても</li>
+          <li>祈りが沈黙に包まれていても</li>
+        </ul>
+        <div class="meditation-text" style="margin-top:10px;">
+          神は「光の種」を蒔いておられる。やがて芽が出て、喜びとなる。
+        </div>
+      </div>
+
+      <div class="meditation-section">
+        <div class="meditation-section-title">④ 「主にあって喜べ」</div>
+        <div class="meditation-text">
+          これは「頑張って喜べ」ではなく、主の中に身を置くと自然に湧いてくる喜びのこと。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRAYER -->
+  <div class="card">
+    <div class="card-label">
+      <span class="card-label-icon">🙏</span>
+      <span class="card-label-text">祈り · Prayer</span>
+      <span class="card-label-line"></span>
+    </div>
+    <div class="prayer-card">
+      <div class="prayer-lang-label">日本語</div>
+      <div class="prayer-text-ja">
+        主よ、心に光の種を蒔いてください。<br>
+        今日もあなたの守りの中で歩ませてください。<br>
+        たとえ今日の道が見えにくくても、<br>
+        あなたが私のたましいを守ってくださると信じます。<br>
+        あなたの聖なる御名に感謝をささげます。<br>
+        イエス・キリストの御名によって。<span class="prayer-amen">アーメン。</span>
+      </div>
+      <div class="prayer-lang-label">English</div>
+      <div class="prayer-text-en">
+        Lord, sow Your light in my heart<br>
+        and keep my soul in Your peace today.<br>
+        Even when the path is unclear,<br>
+        I trust that You are preserving my soul.<br>
+        I give thanks to Your holy name.<br>
+        In the name of Jesus Christ. <span class="prayer-amen" style="font-style:normal;">Amen.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- GOD'S COMMAND -->
+  <div class="gods-word-card">
+    <div class="gods-word-label">
+      <span class="gods-word-label-text">✝️ 神様の命令 · God's Word for Today</span>
+      <span class="gods-word-label-line"></span>
+    </div>
+    <div class="gods-word-ja">
+      悪から心を遠ざけ、主を愛する者として、今日も光の中を歩んでいきましょう。すでに光の種はあなたの心に蒔かれています。感謝をもって、喜びをもって、今日を歩んでください。
+    </div>
+    <div class="gods-word-en">
+      Let us turn our hearts away from evil and walk in the light today as those who love the Lord. The seed of light has already been sown in your heart. Walk this day with gratitude and with joy.
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-title">🕊️ Daily Shalom — 3ステップ</div>
+    <ul class="footer-steps">
+      <li><span>①</span> 聖書を読む</li>
+      <li><span>②</span> 黙想して祈る</li>
+      <li><span>③</span> 御言葉を携えて今日を歩む</li>
+    </ul>
+    <div class="footer-copy">© 2026 Shalom Investment Academy — All rights reserved</div>
+  </div>
+
+</div>
+</body>
+</html>
