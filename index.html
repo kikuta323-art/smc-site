@@ -6,29 +6,66 @@
 <title>Shalom Mission Center</title>
 
 <style>
-body { margin:0; font-family:sans-serif; text-align:center; }
-.hero { background:#222; color:white; padding:60px 20px; }
-.section { padding:40px 20px; }
-.profile img { width:200px; border-radius:50%; margin:20px 0; }
+body {
+  margin:0;
+  font-family:sans-serif;
+  background:#f8f8f8;
+  text-align:center;
+}
+
+.hero {
+  background:url("images/hero.jpg") center/cover no-repeat;
+  color:white;
+  padding:100px 20px;
+}
+
+.overlay {
+  background:rgba(0,0,0,0.5);
+  padding:40px;
+}
+
+.section {
+  padding:60px 20px;
+}
+
+.profile img {
+  width:180px;
+  border-radius:50%;
+  margin:20px 0;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.button {
+  display:inline-block;
+  margin-top:20px;
+  padding:12px 24px;
+  background:#c9a96e;
+  color:white;
+  text-decoration:none;
+  border-radius:5px;
+}
 </style>
 </head>
 
 <body>
 
 <div class="hero">
-<h1>Shalom Mission Center</h1>
-<p>神の平安と共に生きる投資と人生</p>
+  <div class="overlay">
+    <h1>Shalom Mission Center</h1>
+    <p>神の平安と共に生きる投資と人生</p>
+    <a href="#" class="button">個別相談はこちら</a>
+  </div>
 </div>
 
 <div class="section profile">
-<h2>プロフィール</h2>
-<img src="プロフィール写真.jpg">
-<p>聖書の価値観に基づき、投資と人生の導きを行っています。</p>
+  <h2>プロフィール</h2>
+  <img src="プロフィール写真.jpg">
+  <p>聖書の価値観に基づき、投資と人生の導きを行っています。</p>
 </div>
 
 <div class="section">
-<h2>サービス</h2>
-<p>投資教育・個別相談・コミュニティ</p>
+  <h2>サービス</h2>
+  <p>投資教育・個別相談・コミュニティ</p>
 </div>
 
 </body>
