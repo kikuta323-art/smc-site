@@ -25,10 +25,6 @@ body {
 }
 .hero h1 {
   font-size:32px;
-  margin-bottom:20px;
-}
-.hero p {
-  font-size:16px;
 }
 
 /* セクション */
@@ -36,6 +32,16 @@ body {
   max-width:800px;
   margin:60px auto;
   padding:0 20px;
+}
+
+/* プロフィール */
+.profile {
+  text-align:center;
+}
+.profile img {
+  width:180px;
+  border-radius:50%;
+  margin-bottom:20px;
 }
 
 /* 証 */
@@ -66,7 +72,6 @@ footer {
   padding:40px 20px;
   background:#0f2b4a;
   color:#fff;
-  margin-top:60px;
 }
 footer a {
   color:#c9a84c;
@@ -81,6 +86,13 @@ footer a {
 <section class="hero">
   <h1>心からの平安を、あなたの日々へ。</h1>
   <p>Shalom Mission Center</p>
+</section>
+
+<!-- プロフィール -->
+<section class="section profile">
+  <img src="profile.jpg" alt="プロフィール写真">
+  <h2>菊田 吉宏</h2>
+  <p>Shalom Mission Center Founder</p>
 </section>
 
 <!-- 証 -->
@@ -122,11 +134,14 @@ footer a {
 
 </section>
 
-<!-- CTA -->
+<!-- Daily Shalom -->
 <section class="section cta">
   <h2>Daily Shalom</h2>
-  <p>日々のみことばと共に歩むために</p>
-  <a href="#" class="btn">詳細を見る</a>
+  <p>日々のみことばはこちらから</p>
+
+  <a href="https://dailyshalom-kikuta.blogspot.com/" class="btn" target="_blank">
+    ブログを読む
+  </a>
 </section>
 
 <!-- フッター -->
