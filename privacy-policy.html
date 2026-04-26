@@ -2,43 +2,383 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>プライバシーポリシー</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>プライバシーポリシー | Shalom Mission Center</title>
+<meta name="description" content="あなたの大切な情報を、心を込めてお預かりします。">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Shippori+Mincho:wght@400;500;600&family=Noto+Serif+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #14304f;
+    --navy-deep: #0d2240;
+    --navy-darkest: #081628;
+    --gold: #c9a961;
+    --gold-light: #e0c98a;
+    --gold-deep: #9d8344;
+    --ivory: #faf6ec;
+    --paper: #f5efe2;
+    --ink: #1a1410;
+    --line-gold: rgba(201, 169, 97, 0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "Shippori Mincho", "Noto Serif JP", serif;
+    background: var(--navy);
+    color: var(--ivory);
+    line-height: 1.9;
+  }
+  body[data-lang="en"] { font-family: "Cormorant Garamond", Georgia, serif; }
+
+  /* HEADER */
+  header { position: sticky; top: 0; z-index: 100; background: rgba(13, 34, 64, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line-gold); }
+  .header-inner { max-width: 1280px; margin: 0 auto; padding: 1.4rem 3rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
+  .logo { text-decoration: none; line-height: 1.4; flex-shrink: 0; }
+  .logo-en { font-family: "Cormorant Garamond", serif; font-size: 1.5rem; font-weight: 500; letter-spacing: 0.05em; color: var(--ivory); }
+  .logo-en .accent { color: var(--gold); font-style: italic; }
+  .logo-jp { font-family: "Shippori Mincho", serif; font-size: 0.7rem; color: var(--gold-light); letter-spacing: 0.3em; margin-top: 0.25rem; }
+  body[data-lang="en"] .logo-jp { display: none; }
+
+  nav ul { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
+  nav a { text-decoration: none; color: rgba(250, 246, 236, 0.85); font-family: "Shippori Mincho", serif; font-size: 0.85rem; letter-spacing: 0.2em; transition: color 0.4s ease; padding: 0.3rem 0; position: relative; }
+  body[data-lang="en"] nav a { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 1.05rem; letter-spacing: 0.1em; }
+  nav a:hover { color: var(--gold-light); }
+  nav a::after { content: ""; position: absolute; bottom: -3px; left: 50%; transform: translateX(-50%); width: 0; height: 1px; background: var(--gold); transition: width 0.4s ease; }
+  nav a:hover::after { width: 100%; }
+
+  .lang-toggle { display: flex; gap: 0.4rem; align-items: center; border-left: 1px solid rgba(201, 169, 97, 0.3); padding-left: 1.5rem; }
+  .lang-btn { background: none; border: none; cursor: pointer; padding: 0.3rem 0.6rem; font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 0.95rem; font-weight: 500; color: rgba(250, 246, 236, 0.5); letter-spacing: 0.2em; transition: color 0.4s ease; }
+  .lang-btn.active { color: var(--gold); }
+  .lang-btn:hover { color: var(--gold-light); }
+
+  /* MAIN */
+  main { max-width: 880px; margin: 0 auto; padding: 5rem 2rem; }
+
+  /* The card */
+  .policy-card {
+    background: rgba(8, 22, 40, 0.4);
+    border: 1px solid var(--gold);
+    padding: 5rem 4rem;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+  }
+  .policy-card::before {
+    content: "";
+    position: absolute;
+    top: 8px; left: 8px; right: 8px; bottom: 8px;
+    border: 1px solid var(--gold);
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  .ds-eyebrow { text-align: center; margin-bottom: 1.8rem; color: var(--gold-light); }
+  .ds-eyebrow .en { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 0.9rem; letter-spacing: 0.45em; text-transform: uppercase; }
+  .ds-eyebrow .sep { margin: 0 0.7rem; color: var(--gold); }
+  .ds-eyebrow .jp { font-family: "Shippori Mincho", serif; font-size: 0.85rem; letter-spacing: 0.4em; }
+
+  .page-title {
+    font-family: "Shippori Mincho", serif;
+    font-weight: 500;
+    font-size: 2.4rem;
+    text-align: center;
+    color: var(--ivory);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+  }
+  body[data-lang="en"] .page-title {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 500;
+    font-size: 3rem;
+    letter-spacing: 0.04em;
+  }
+
+  .ds-divider { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 1.5rem auto 3rem; }
+  .ds-divider::before, .ds-divider::after { content: ""; width: 60px; height: 1px; background: var(--gold); }
+  .ds-divider span { color: var(--gold); font-size: 0.7rem; letter-spacing: 0.6em; }
+
+  .page-subtitle {
+    font-family: "Shippori Mincho", serif;
+    font-size: 1.05rem; text-align: center;
+    color: var(--gold-light); margin-bottom: 4rem;
+    letter-spacing: 0.15em; line-height: 2.1;
+  }
+  body[data-lang="en"] .page-subtitle { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 1.25rem; letter-spacing: 0.05em; }
+
+  .intro {
+    font-family: "Shippori Mincho", serif;
+    font-size: 1rem; line-height: 2.3;
+    color: rgba(250, 246, 236, 0.9);
+    margin-bottom: 4rem; letter-spacing: 0.06em;
+    padding: 2rem 2.5rem;
+    border-left: 2px solid var(--gold);
+    background: rgba(201, 169, 97, 0.04);
+  }
+  body[data-lang="en"] .intro { font-family: "Cormorant Garamond", serif; font-size: 1.2rem; }
+  .intro p:not(:last-child) { margin-bottom: 1rem; }
+
+  .policy-section { margin-bottom: 3.5rem; }
+  .policy-section h2 {
+    font-family: "Shippori Mincho", serif; font-weight: 500;
+    font-size: 1.3rem; color: var(--gold-light); margin-bottom: 1.5rem;
+    letter-spacing: 0.1em;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--line-gold);
+    display: flex; align-items: baseline; gap: 0.8rem;
+  }
+  body[data-lang="en"] .policy-section h2 { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 1.6rem; letter-spacing: 0.04em; }
+  .policy-section h2 .num {
+    color: var(--gold);
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+
+  .policy-section p { font-family: "Shippori Mincho", serif; font-size: 0.97rem; line-height: 2.2; color: rgba(250, 246, 236, 0.85); margin-bottom: 1.1rem; letter-spacing: 0.06em; }
+  body[data-lang="en"] .policy-section p { font-family: "Cormorant Garamond", serif; font-size: 1.15rem; }
+
+  .policy-section ul { list-style: none; margin: 1rem 0 1.3rem 0; }
+  .policy-section li { font-family: "Shippori Mincho", serif; font-size: 0.97rem; line-height: 2; color: rgba(250, 246, 236, 0.85); padding: 0.45rem 0; padding-left: 2rem; position: relative; letter-spacing: 0.06em; }
+  body[data-lang="en"] .policy-section li { font-family: "Cormorant Garamond", serif; font-size: 1.15rem; }
+  .policy-section li::before { content: "✦"; position: absolute; left: 0.3rem; color: var(--gold); font-size: 0.7rem; top: 0.95rem; }
+
+  .policy-section .sub-detail { font-size: 0.88rem; color: rgba(250, 246, 236, 0.6); padding-left: 2.3rem; margin-top: -0.4rem; }
+  body[data-lang="en"] .policy-section .sub-detail { font-size: 1.02rem; font-style: italic; }
+
+  .contact-block {
+    background: rgba(8, 22, 40, 0.4);
+    padding: 2rem 2.2rem;
+    margin-top: 1.3rem;
+    border: 1px solid var(--line-gold);
+    position: relative;
+  }
+  .contact-block::before {
+    content: "";
+    position: absolute;
+    top: 6px; left: 6px; right: 6px; bottom: 6px;
+    border: 1px solid var(--line-gold);
+    pointer-events: none;
+  }
+  .contact-block > * { position: relative; z-index: 1; }
+  .contact-block p { margin-bottom: 0.5rem !important; font-size: 0.95rem; }
+  body[data-lang="en"] .contact-block p { font-size: 1.08rem; }
+  .contact-block .label { font-family: "Cormorant Garamond", serif; font-style: italic; color: var(--gold); font-size: 0.88rem; letter-spacing: 0.2em; }
+  .contact-block strong { font-family: "Cormorant Garamond", serif; font-style: italic; color: var(--gold-light); font-weight: 500; font-size: 1.1rem; }
+  .contact-block a { color: var(--ivory); text-decoration: none; border-bottom: 1px solid var(--line-gold); transition: all 0.4s ease; padding-bottom: 1px; }
+  .contact-block a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .last-updated { text-align: center; margin-top: 4.5rem; padding-top: 2rem; border-top: 1px solid var(--line-gold); font-family: "Shippori Mincho", serif; font-size: 0.92rem; color: var(--gold); letter-spacing: 0.2em; }
+  body[data-lang="en"] .last-updated { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 1rem; }
+
+  .back-link-container { text-align: center; margin-top: 3rem; }
+  .back-link {
+    display: inline-block; font-family: "Cormorant Garamond", serif;
+    font-style: italic; color: var(--gold); text-decoration: none;
+    font-size: 1rem; letter-spacing: 0.2em;
+    border-bottom: 1px solid var(--gold); padding: 0.4rem 0.5rem;
+    transition: all 0.4s ease;
+  }
+  .back-link:hover { color: var(--gold-light); letter-spacing: 0.25em; }
+
+  /* FOOTER */
+  footer { background: var(--navy-darkest); color: var(--ivory); padding: 4rem 3rem 2rem; position: relative; }
+  footer::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 200px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
+  .footer-inner { max-width: 1280px; margin: 0 auto; text-align: center; }
+  .footer-logo-en { font-family: "Cormorant Garamond", serif; font-size: 1.5rem; font-weight: 500; letter-spacing: 0.05em; color: var(--ivory); margin-bottom: 0.4rem; }
+  .footer-logo-en .accent { color: var(--gold); font-style: italic; }
+  .footer-logo-jp { font-family: "Shippori Mincho", serif; font-size: 0.85rem; color: var(--gold-light); letter-spacing: 0.25em; margin-bottom: 1.5rem; }
+  body[data-lang="en"] .footer-logo-jp { display: none; }
+  .footer-tagline { font-family: "Shippori Mincho", serif; font-size: 0.9rem; color: var(--gold); letter-spacing: 0.2em; line-height: 1.9; margin-bottom: 2.5rem; }
+  body[data-lang="en"] .footer-tagline { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 1.05rem; letter-spacing: 0.04em; }
+
+  .footer-bottom { border-top: 1px solid rgba(201, 169, 97, 0.15); padding-top: 2rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+  .footer-bottom a, .footer-bottom span { color: rgba(250, 246, 236, 0.5); font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 0.9rem; text-decoration: none; letter-spacing: 0.2em; transition: color 0.4s ease; }
+  .footer-bottom a:hover { color: var(--gold); }
+
+  @media (max-width: 880px) {
+    .header-inner { padding: 1.2rem 1.3rem; flex-wrap: wrap; gap: 1rem; }
+    nav ul { gap: 1.4rem; }
+    nav a { font-size: 0.78rem; }
+    main { padding: 3rem 1.2rem; }
+    .policy-card { padding: 3rem 1.8rem; }
+    .page-title { font-size: 1.7rem; }
+    body[data-lang="en"] .page-title { font-size: 2.3rem; }
+    .policy-section h2 { font-size: 1.1rem; }
+    .intro { padding: 1.5rem 1.4rem; }
+    .contact-block { padding: 1.5rem 1.4rem; }
+  }
+
+  @media (max-width: 480px) {
+    .header-inner { flex-direction: column; align-items: flex-start; }
+    nav ul { gap: 1rem; flex-wrap: wrap; }
+    .lang-toggle { border-left: none; padding-left: 0; margin-left: auto; }
+  }
+</style>
 </head>
-<body>
+<body data-lang="ja">
 
-<h1>プライバシーポリシー</h1>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-en">Shalom <span class="accent">Mission Center</span></div>
+      <div class="logo-jp">シャローム・ミッション・センター</div>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html" data-ja="ホーム" data-en="Home">ホーム</a></li>
+        <li><a href="index.html#contact" data-ja="お問合せ" data-en="Contact">お問合せ</a></li>
+      </ul>
+    </nav>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('ja')" id="btn-ja">JP</button>
+      <span style="color: rgba(201, 169, 97, 0.3);">·</span>
+      <button class="lang-btn" onclick="setLang('en')" id="btn-en">EN</button>
+    </div>
+  </div>
+</header>
 
-<p>Shalom Mission Center（以下、「当サイト」）は、個人情報の保護を重要視し、以下の方針に基づき適切に取り扱います。</p>
+<main>
+  <div class="policy-card">
 
-<h2>1. 個人情報の取得について</h2>
-<p>当サイトでは、お問い合わせやサービス申込みの際に、お名前・メールアドレス等の個人情報を取得することがあります。</p>
+    <div class="ds-eyebrow">
+      <span class="en">Privacy Policy</span><span class="sep">·</span><span class="jp">プライバシーポリシー</span>
+    </div>
 
-<h2>2. 個人情報の利用目的</h2>
-<p>取得した個人情報は、以下の目的で利用します。</p>
-<ul>
-<li>お問い合わせ対応</li>
-<li>サービス提供・案内</li>
-<li>重要なお知らせの連絡</li>
-</ul>
+    <h1 class="page-title" data-ja="プライバシーポリシー" data-en="Privacy Policy">プライバシーポリシー</h1>
 
-<h2>3. 個人情報の第三者提供</h2>
-<p>法令に基づく場合を除き、本人の同意なく第三者に提供することはありません。</p>
+    <div class="ds-divider"><span>✦</span></div>
 
-<h2>4. 個人情報の管理</h2>
-<p>個人情報の漏洩・紛失を防ぐため、適切な安全対策を講じます。</p>
+    <p class="page-subtitle" data-ja="あなたの大切な情報を、心を込めてお預かりします。" data-en="Your information is held with care.">あなたの大切な情報を、心を込めてお預かりします。</p>
 
-<h2>5. アクセス解析について</h2>
-<p>当サイトではアクセス解析ツールを使用する場合があります。</p>
+    <div class="intro"
+      data-ja-html='<p>Shalom Mission Center(以下、「当ミニストリー」)は、このサイトをご利用くださる皆さまの個人情報を、大切にお預かりすることをお約束いたします。</p><p>このページでは、当ミニストリーが、どのように個人情報を取り扱うかについて、ご説明いたします。</p>'
+      data-en-html='<p>Shalom Mission Center (hereafter, "this ministry") promises to receive and care for the personal information of all who use this site.</p><p>This page explains how this ministry handles personal information.</p>'>
+      <p>Shalom Mission Center(以下、「当ミニストリー」)は、このサイトをご利用くださる皆さまの個人情報を、大切にお預かりすることをお約束いたします。</p>
+      <p>このページでは、当ミニストリーが、どのように個人情報を取り扱うかについて、ご説明いたします。</p>
+    </div>
 
-<h2>6. 免責事項</h2>
-<p>当サイトの情報によって生じた損害について一切の責任を負いません。</p>
+    <div class="policy-section">
+      <h2><span class="num">I.</span><span data-ja="お預かりする情報" data-en="Information We Collect">お預かりする情報</span></h2>
+      <p data-ja="当ミニストリーは、以下の場合に個人情報をお預かりすることがあります。" data-en="This ministry may receive personal information in the following cases.">当ミニストリーは、以下の場合に個人情報をお預かりすることがあります。</p>
+      <ul>
+        <li data-ja="お問い合わせフォームをご利用いただいたとき" data-en="When you use the contact form">お問い合わせフォームをご利用いただいたとき</li>
+      </ul>
+      <p class="sub-detail" data-ja="(お名前、メールアドレス、ご用件、メッセージ内容)" data-en="(Name, email address, purpose, message)">(お名前、メールアドレス、ご用件、メッセージ内容)</p>
+      <ul>
+        <li data-ja="Daily Shalom の配信登録をしていただいたとき" data-en="When you register for Daily Shalom delivery">Daily Shalom の配信登録をしていただいたとき</li>
+      </ul>
+      <p class="sub-detail" data-ja="(お名前、メールアドレス)" data-en="(Name, email address)">(お名前、メールアドレス)</p>
+      <p data-ja="これ以外の情報を、お客様の同意なくお預かりすることはありません。" data-en="No information beyond this will be received without your consent.">これ以外の情報を、お客様の同意なくお預かりすることはありません。</p>
+    </div>
 
-<h2>7. お問い合わせ</h2>
-<p>お問い合わせはメールにてお願いいたします。</p>
+    <div class="policy-section">
+      <h2><span class="num">II.</span><span data-ja="情報の利用目的" data-en="Purpose of Use">情報の利用目的</span></h2>
+      <p data-ja="お預かりした個人情報は、以下の目的にのみ使用いたします。" data-en="Personal information received will be used only for the following purposes.">お預かりした個人情報は、以下の目的にのみ使用いたします。</p>
+      <ul>
+        <li data-ja="お問い合わせへの返信" data-en="Replying to inquiries">お問い合わせへの返信</li>
+        <li data-ja="Daily Shalom の配信" data-en="Delivery of Daily Shalom">Daily Shalom の配信</li>
+        <li data-ja="お祈りの依頼への対応" data-en="Responding to prayer requests">お祈りの依頼への対応</li>
+        <li data-ja="関連するご連絡や、お知らせ" data-en="Related communications and announcements">関連するご連絡や、お知らせ</li>
+      </ul>
+      <p data-ja="これ以外の目的で使用することは、ありません。" data-en="It will not be used for any other purpose.">これ以外の目的で使用することは、ありません。</p>
+    </div>
 
- <footer>
-  <a href="privacy-policy.html">Privacy Policy</a>
+    <div class="policy-section">
+      <h2><span class="num">III.</span><span data-ja="第三者への提供について" data-en="Third Party Disclosure">第三者への提供について</span></h2>
+      <p data-ja="当ミニストリーは、お預かりした個人情報を、お客様の同意なく第三者に提供することは、一切ありません。" data-en="This ministry will never share personal information with third parties without your consent.">当ミニストリーは、お預かりした個人情報を、お客様の同意なく第三者に提供することは、一切ありません。</p>
+      <p data-ja="ただし、以下の場合は例外といたします。" data-en="The following are exceptions.">ただし、以下の場合は例外といたします。</p>
+      <ul>
+        <li data-ja="法令に基づき、開示が求められた場合" data-en="When disclosure is required by law">法令に基づき、開示が求められた場合</li>
+        <li data-ja="人の生命、身体、財産の保護のために必要であって、ご本人の同意を得ることが困難である場合" data-en="When necessary to protect life, body, or property, and obtaining consent is difficult">人の生命、身体、財産の保護のために必要であって、ご本人の同意を得ることが困難である場合</li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2><span class="num">IV.</span><span data-ja="情報の安全管理" data-en="Information Security">情報の安全管理</span></h2>
+      <p data-ja="お預かりした個人情報は、漏えい・紛失・改ざんなどを防ぐため、適切に管理いたします。" data-en="Personal information received will be managed appropriately to prevent leakage, loss, or tampering.">お預かりした個人情報は、漏えい・紛失・改ざんなどを防ぐため、適切に管理いたします。</p>
+      <p data-ja="メールでのやり取りには、Gmailのセキュリティ機能を利用しています。" data-en="Email communications utilize Gmail's security features.">メールでのやり取りには、Gmailのセキュリティ機能を利用しています。</p>
+    </div>
+
+    <div class="policy-section">
+      <h2><span class="num">V.</span><span data-ja="配信停止と情報の削除" data-en="Unsubscribing and Information Deletion">配信停止と情報の削除</span></h2>
+      <p data-ja="Daily Shalom の配信を停止したい場合、あるいは、お預かりしているご自身の情報の削除をご希望の場合は、お気軽にお問い合わせください。" data-en="If you wish to stop receiving Daily Shalom, or if you wish to have your information deleted, please feel free to contact us.">Daily Shalom の配信を停止したい場合、あるいは、お預かりしているご自身の情報の削除をご希望の場合は、お気軽にお問い合わせください。</p>
+      <p data-ja="速やかに対応いたします。" data-en="We will respond promptly.">速やかに対応いたします。</p>
+    </div>
+
+    <div class="policy-section">
+      <h2><span class="num">VI.</span><span data-ja="Cookie(クッキー)について" data-en="About Cookies">Cookie(クッキー)について</span></h2>
+      <p data-ja="当サイトでは、訪問者の利用状況を把握するために、Cookieを使用することがあります。" data-en="This site may use cookies to understand visitor usage.">当サイトでは、訪問者の利用状況を把握するために、Cookieを使用することがあります。</p>
+      <p data-ja="Cookieとは、ウェブサイトが訪問者のブラウザに保存する、小さなデータです。これにより、サイトの使い心地を改善する目的でのみ使用しています。" data-en="Cookies are small pieces of data that websites store in visitors' browsers. They are used only for the purpose of improving the site experience.">Cookieとは、ウェブサイトが訪問者のブラウザに保存する、小さなデータです。これにより、サイトの使い心地を改善する目的でのみ使用しています。</p>
+      <p data-ja="ご希望に応じて、ブラウザの設定からCookieの使用を拒否することができます。" data-en="You may decline cookies through your browser settings if you wish.">ご希望に応じて、ブラウザの設定からCookieの使用を拒否することができます。</p>
+    </div>
+
+    <div class="policy-section">
+      <h2><span class="num">VII.</span><span data-ja="お問い合わせ窓口" data-en="Contact for Inquiries">お問い合わせ窓口</span></h2>
+      <p data-ja="このプライバシーポリシーに関するご質問や、個人情報の取り扱いについてのご相談は、お問い合わせフォームよりお気軽にご連絡ください。" data-en="For questions about this Privacy Policy or consultations regarding the handling of personal information, please feel free to contact us through the contact form.">このプライバシーポリシーに関するご質問や、個人情報の取り扱いについてのご相談は、お問い合わせフォームよりお気軽にご連絡ください。</p>
+
+      <div class="contact-block">
+        <p><strong>Shalom Mission Center</strong></p>
+        <p><span class="label">Email:</span> <a href="mailto:kikuta323@gmail.com">kikuta323@gmail.com</a></p>
+        <p><span class="label">Location:</span> <span data-ja="宮城県仙台市" data-en="Sendai, Miyagi, Japan">宮城県仙台市</span></p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <h2><span class="num">VIII.</span><span data-ja="ポリシーの改定" data-en="Policy Updates">ポリシーの改定</span></h2>
+      <p data-ja="このプライバシーポリシーは、必要に応じて改定することがあります。重要な変更がある場合は、サイト上でお知らせいたします。" data-en="This Privacy Policy may be revised as necessary. If there are significant changes, we will notify you on the site.">このプライバシーポリシーは、必要に応じて改定することがあります。重要な変更がある場合は、サイト上でお知らせいたします。</p>
+    </div>
+
+    <div class="last-updated" data-ja="最終更新日: 2026年4月26日" data-en="Last Updated: April 26, 2026">最終更新日: 2026年4月26日</div>
+
+    <div class="back-link-container">
+      <a href="index.html" class="back-link" data-ja="← ホームに戻る" data-en="← Back to Home">← ホームに戻る</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo-en">Shalom <span class="accent">Mission Center</span></div>
+    <div class="footer-logo-jp">シャローム・ミッション・センター</div>
+    <div class="footer-tagline" data-ja="― 大切な人々へ、心からの平安を ―" data-en="― To Those Who Matter Most, the Peace of the Heart ―">― 大切な人々へ、心からの平安を ―</div>
+
+    <div class="footer-bottom">
+      <a href="privacy-policy.html" data-ja="プライバシーポリシー" data-en="Privacy Policy">プライバシーポリシー</a>
+      <span>© 2026 Shalom Mission Center</span>
+    </div>
+  </div>
 </footer>
+
+<script>
+  function setLang(lang) {
+    document.body.setAttribute('data-lang', lang);
+    document.documentElement.setAttribute('lang', lang);
+    localStorage.setItem('smc-lang', lang);
+
+    document.getElementById('btn-ja').classList.toggle('active', lang === 'ja');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+    document.querySelectorAll('[data-ja]').forEach(el => {
+      const text = el.getAttribute('data-' + lang);
+      if (text !== null) el.textContent = text;
+    });
+
+    document.querySelectorAll('[data-ja-html]').forEach(el => {
+      const html = el.getAttribute('data-' + lang + '-html');
+      if (html !== null) el.innerHTML = html;
+    });
+  }
+
+  const savedLang = localStorage.getItem('smc-lang') || 'ja';
+  setLang(savedLang);
+</script>
 
 </body>
 </html>
